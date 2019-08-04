@@ -32,7 +32,7 @@ private:
     QStatusBar* m_statusBar;
     void updateStatusBar();
     //core::MineField* m_minefield = nullptr;
-    core::MineField* m_minefield = nullptr;
+    std::shared_ptr<core::MineField> m_minefield;
     bool runGame(GameType type);
 
 private slots:

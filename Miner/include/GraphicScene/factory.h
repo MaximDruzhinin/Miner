@@ -9,7 +9,8 @@ namespace gui {
 class GRAPHICSCENE_EXPORT Factory: public core::Factory {
 public:
     core::ICell* createCell(int row, int col, QObject* parent = nullptr) override;
-    core::MineField* createMineField(int rowCount, int colCount, int mineCount) override;
+    //core::MineField* createMineField(int rowCount, int colCount, int mineCount) override;
+    std::shared_ptr<core::MineField> createMineField(int rowCount, int colCount, int mineCount) override;
 };
 
 }

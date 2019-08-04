@@ -31,22 +31,20 @@ class CORE_EXPORT Game: public QObject {
     Q_OBJECT
 public:
     explicit Game(QObject* parent = 0);
-    MineField* run(GameType type);
+    std::shared_ptr<MineField> run(GameType type);
     GameType type() const;
     QTime timeElapsed() const;
     virtual bool gameIsWin() const;
     virtual bool gameIsLost() const;
-    //MineField* minefield();
     GameStatus status() const;
     void setFactory(Factory* fact);
 
 private:
     GameType m_type = GameType::Beginner;
-    MineField* m_minefield = nullptr;
+    std::shared_ptr<MineField> m_minefield;
     QTime m_time;
     GameStatus m_status = GameStatus::NotStarted;
     int m_timeElapsed = 0;
-    //int m_detonationCount = 0;
     bool m_detonated = false;
     Factory* m_factory = nullptr;
 

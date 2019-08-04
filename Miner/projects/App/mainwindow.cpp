@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop);
 
-    //m_miner = new core::Game(nullptr);
     m_miner = std::make_shared<core::Game>(nullptr);
     m_miner->setFactory(new gui::Factory);
 
@@ -67,7 +66,7 @@ bool MainWindow::runGame(GameType type)
         LOG_ERROR("Failed init minefield")
         return false;
     }
-    gui::MineScene* scene = dynamic_cast<gui::MineScene*>(m_minefield);
+    std::shared_ptr<gui::MineScene> scene = std::dynamic_pointer_cast<gui::MineScene>(m_minefield);
     if (!scene) {
         LOG_ERROR("Can't cast to gui::MineScene")
         return false;

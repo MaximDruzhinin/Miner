@@ -11,9 +11,11 @@ core::ICell* gui::Factory::createCell(int row, int col, QObject *parent)
     return new gui::GraphicCell(row, col, new draw::CellPainter);
 }
 
-core::MineField* gui::Factory::createMineField(int rowCount, int colCount, int mineCount)
+//core::MineField* gui::Factory::createMineField(int rowCount, int colCount, int mineCount)
+std::shared_ptr<core::MineField> gui::Factory::createMineField(int rowCount, int colCount, int mineCount)
 {
-    auto scene =  new gui::MineScene(rowCount, colCount, mineCount);
+    //auto scene =  new gui::MineScene(rowCount, colCount, mineCount);
+    auto scene =  std::make_shared<MineScene>(rowCount, colCount, mineCount);
 
     for (int i = 0; i < rowCount; i++) {
         for (int j = 0; j < colCount; j++) {

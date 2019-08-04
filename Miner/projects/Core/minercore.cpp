@@ -5,7 +5,7 @@ core::Game::Game(QObject* parent): QObject(parent), m_time(0,0,0)
 {
 }
 
-core::MineField* core::Game::run(GameType type)
+std::shared_ptr<core::MineField> core::Game::run(GameType type)
 {
     m_type = type;
     m_status = GameStatus::NotStarted;
@@ -40,13 +40,11 @@ core::MineField* core::Game::run(GameType type)
         return nullptr;
     }
 
-    auto minefield = dynamic_cast<core::MineField*>(m_minefield);
-
-    if (minefield) {
-        QObject::connect(minefield, SIGNAL(on_initialized()), this, SLOT(on_minefield_initalized()));
-        QObject::connect(minefield, SIGNAL(flagSetted()), this, SLOT(on_minefield_flagSetted()));
-        QObject::connect(minefield, SIGNAL(flagRemoved()),this, SLOT(on_minefield_flagRemoved()));
-        QObject::connect(minefield, SIGNAL(detonationCell()), this, SLOT(on_minefield_detonationCell()));
+    if (m_minefield) {
+        QObject::connect(m_minefield.get(), SIGNAL(on_initialized()), this, SLOT(on_minefield_initalized()));
+        QObject::connect(m_minefield.get(), SIGNAL(flagSetted()), this, SLOT(on_minefield_flagSetted()));
+        QObject::connect(m_minefield.get(), SIGNAL(flagRemoved()),this, SLOT(on_minefield_flagRemoved()));
+        QObject::connect(m_minefield.get(), SIGNAL(detonationCell()), this, SLOT(on_minefield_detonationCell()));
     }
 
     return m_minefield;
