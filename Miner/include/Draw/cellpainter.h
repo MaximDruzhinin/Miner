@@ -20,5 +20,4 @@ public:
 
 }
 
-
 #endif // MINERPAINTER_H

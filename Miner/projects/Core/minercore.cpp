@@ -32,21 +32,27 @@ std::shared_ptr<core::MineField> core::Game::run(GameType type)
     }
 
     if (!m_factory) {
-        LOG_ERROR("factory not init")
+        LOG_ERROR("Factory not init")
         return nullptr;
     }
+
     m_minefield = m_factory->createMineField(rowCount, colCount, mineCount);
+
     if (!m_minefield) {
         LOG_ERROR("Failed to create minefield")
         return nullptr;
     }
 
-    if (m_minefield) {
-        QObject::connect(m_minefield.get(), SIGNAL(on_initialized()), this, SLOT(on_minefield_initalized()));
-        QObject::connect(m_minefield.get(), SIGNAL(flagSetted()), this, SLOT(on_minefield_flagSetted()));
-        QObject::connect(m_minefield.get(), SIGNAL(flagRemoved()),this, SLOT(on_minefield_flagRemoved()));
-        QObject::connect(m_minefield.get(), SIGNAL(detonationCell()), this, SLOT(on_minefield_detonationCell()));
+    for (int i = 0; i < rowCount; i++) {
+        for (int j = 0; j < colCount; j++) {
+            m_minefield->addCell(m_factory->createCell(i, j));
+        }
     }
+
+    QObject::connect(m_minefield.get(), SIGNAL(on_initialized()), this, SLOT(on_minefield_initalized()));
+    QObject::connect(m_minefield.get(), SIGNAL(flagSetted()),     this, SLOT(on_minefield_flagSetted()));
+    QObject::connect(m_minefield.get(), SIGNAL(flagRemoved()),    this, SLOT(on_minefield_flagRemoved()));
+    QObject::connect(m_minefield.get(), SIGNAL(detonationCell()), this, SLOT(on_minefield_detonationCell()));
 
     return m_minefield;
 }
@@ -55,7 +61,6 @@ GameType core::Game::type() const
 {
     return m_type;
 }
-
 
 QTime core::Game::timeElapsed() const
 {
@@ -76,14 +81,13 @@ QTime core::Game::timeElapsed() const
 
 bool core::Game::gameIsWin() const
 {
-    return (m_minefield->revealedMineCount() == m_minefield->mineCount());
+    return (m_minefield ? m_minefield->revealedMineCount() == m_minefield->mineCount() : false);
 }
 
 bool core::Game::gameIsLost() const
 {
     return m_detonated;
 }
-
 
 GameStatus core::Game::status() const
 {
@@ -95,11 +99,6 @@ void core::Game::setFactory(std::shared_ptr<core::Factory> factory)
     m_factory = factory;
 }
 
-//void core::Game::setFactory(Factory* fact)
-//{
-//    m_factory = fact;
-//}
-
 void core::Game::on_minefield_initalized()
 {
     m_time.start();
@@ -108,6 +107,9 @@ void core::Game::on_minefield_initalized()
 
 void core::Game::on_minefield_flagSetted()
 {
+    if (!m_minefield)
+        return;
+
     emit on_flagSetted();
 
     if (gameIsWin()) {
@@ -125,7 +127,11 @@ void core::Game::on_minefield_flagRemoved()
 
 void core::Game::on_minefield_detonationCell()
 {
+    if (!m_minefield)
+        return;
+
     m_detonated = true;
+
     if (gameIsLost()) {
         m_minefield->setEnabled(false);
         m_minefield->openUnrevealedMines();

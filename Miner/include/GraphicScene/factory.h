@@ -17,5 +17,4 @@ private:
 
 }
 
-
 #endif // FACTORY_H

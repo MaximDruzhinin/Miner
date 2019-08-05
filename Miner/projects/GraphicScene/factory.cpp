@@ -8,7 +8,6 @@
 
 gui::Factory::Factory(QObject* painter): m_painter(painter)
 {
-
 }
 
 core::ICell* gui::Factory::createCell(int row, int col, QObject* parent)
@@ -18,13 +17,5 @@ core::ICell* gui::Factory::createCell(int row, int col, QObject* parent)
 
 std::shared_ptr<core::MineField> gui::Factory::createMineField(int rowCount, int colCount, int mineCount)
 {
-    auto scene =  std::make_shared<MineScene>(rowCount, colCount, mineCount);
-
-    for (int i = 0; i < rowCount; i++) {
-        for (int j = 0; j < colCount; j++) {
-            scene->addCell(createCell(i, j, m_painter));
-        }
-    }
-
-    return scene;
+    return std::make_shared<MineScene>(rowCount, colCount, mineCount);
 }

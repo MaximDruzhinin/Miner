@@ -55,12 +55,13 @@ bool core::MineField::addFlagInCell(int row, int col)
 
 bool core::MineField::removeFlagFromCell(int row, int col)
 {
-    auto cell = at(row, col);
+    ICell* cell = at(row, col);
     if (!cell)
         return false;
 
     if (cell->removeFlag()) {
-        auto pos = qFind(m_flagCells.begin(), m_flagCells.end(), cell);
+        //auto pos = qFind(m_flagCells.begin(), m_flagCells.end(), cell);
+        auto pos = std::find(m_flagCells.begin(), m_flagCells.end(), cell);
         if (pos != m_flagCells.end()) {
             m_flagCells.erase(pos);
             if (cell->mined())
@@ -68,11 +69,11 @@ bool core::MineField::removeFlagFromCell(int row, int col)
             emit flagRemoved();
             return true;
         }
-        else
-            return false;
+//        else
+//            return false;
     }
-    else
-        return false;
+    //else
+    return false;
 
 }
 
@@ -86,7 +87,7 @@ core::ICell* core::MineField::at(int row, int col) const
 
 bool core::MineField::outOfRange(int row, int col) const
 {
-    return (row < 0 || col < 0 || col > m_colCount-1 || row > m_rowCount-1);
+    return (row < 0 || col < 0 || col > m_colCount - 1 || row > m_rowCount - 1);
 }
 
 quint8 core::MineField::rowCount() const
@@ -142,6 +143,7 @@ void core::MineField::init(ICell* cell)
         }
     }
     m_isInit = true;
+
     emit on_initialized();
 }
 
@@ -247,7 +249,7 @@ std::set<core::ICell*> core::MineField::neibCells(int row, int col) const
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++ ) {
             if (i || j) {
-                auto neib = at(row+i, col+j);
+                auto neib = at(row + i, col + j);
                 if (neib)
                     neibs.insert(neib);
             }
