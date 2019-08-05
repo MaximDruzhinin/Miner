@@ -10,19 +10,17 @@
 namespace gui {
     class  GRAPHICSCENE_EXPORT GraphicCell: public core::Cell, public QGraphicsItem {
     public:
-        GraphicCell(int row, int col, draw::ICellPainter* cellPainter,
-                    quint8 width = 20, quint8 height = 20);
-
+        GraphicCell(int row, int col, QObject* painter, quint8 width = 20, quint8 height = 20);
         void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
         QRectF boundingRect() const override;
-        void show() override;
+        void changed() override;
         quint8 width() const;
         quint8 height() const;
-        draw::ICellPainter* cellPainter() const;
+        QObject* cellPainter() const;
 
     private:
         void drawFlag(QPainter* painter) const;
-        draw::ICellPainter* m_cellPainter;
+        QObject* m_painter = nullptr;
         quint8 m_width;
         quint8 m_height;
 

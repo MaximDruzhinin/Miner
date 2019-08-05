@@ -37,7 +37,8 @@ public:
     virtual bool gameIsWin() const;
     virtual bool gameIsLost() const;
     GameStatus status() const;
-    void setFactory(Factory* fact);
+    //void setFactory(Factory* fact);
+    void setFactory(std::shared_ptr<Factory> fact);
 
 private:
     GameType m_type = GameType::Beginner;
@@ -46,7 +47,8 @@ private:
     GameStatus m_status = GameStatus::NotStarted;
     int m_timeElapsed = 0;
     bool m_detonated = false;
-    Factory* m_factory = nullptr;
+    //Factory* m_factory = nullptr;
+    std::shared_ptr<Factory> m_factory;
 
 signals:
      void on_gameIsWin();

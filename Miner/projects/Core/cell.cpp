@@ -19,7 +19,7 @@ void core::Cell::open(bool detonate)
          m_detonated = true;
          detonation();
     }
-    show();
+    changed();
 }
 
 bool core::Cell::empty() const
@@ -31,7 +31,7 @@ bool core::Cell::setFlag()
 {
     if (!m_opened && !m_flagged) {
         m_flagged = true;
-        show();
+        changed();
         return true;
     }
     return false;
@@ -41,7 +41,7 @@ bool core::Cell::removeFlag()
 {
     if (!m_opened && m_flagged) {
        m_flagged = false;
-       show();
+       changed();
        return true;
     }
 

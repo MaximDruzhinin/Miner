@@ -2,6 +2,11 @@
 
 
 
+draw::CellPainter::CellPainter(QObject* parent): QObject (parent)
+{
+
+}
+
 void draw::CellPainter::drawCell(QPainter* painter, const QRectF& rect, bool opened) const
 {
     painter->save();

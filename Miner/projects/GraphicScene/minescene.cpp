@@ -37,7 +37,6 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 
     QGraphicsItem* item = itemAt(event->scenePos(), QTransform());
-    //item.reset(itemAt(event->scenePos(), QTransform()));
     gui::GraphicCell* cell = dynamic_cast<gui::GraphicCell*>(item);
     if (cell) {
         if (event->button() == Qt::LeftButton) {
@@ -52,7 +51,6 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
     }
     QGraphicsScene::mousePressEvent(event);
-    //qDebug () << "AFTER MOUSE PRESS";
 }
 
 quint8 gui::MineScene::cellWidth() const

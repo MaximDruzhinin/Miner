@@ -1,5 +1,6 @@
 #include "Core/minercore.h"
 #include "logger.h"
+//#include <Draw/cellpainter.h>
 
 core::Game::Game(QObject* parent): QObject(parent), m_time(0,0,0)
 {
@@ -89,10 +90,15 @@ GameStatus core::Game::status() const
     return m_status;
 }
 
-void core::Game::setFactory(Factory* fact)
+void core::Game::setFactory(std::shared_ptr<core::Factory> factory)
 {
-    m_factory = fact;
+    m_factory = factory;
 }
+
+//void core::Game::setFactory(Factory* fact)
+//{
+//    m_factory = fact;
+//}
 
 void core::Game::on_minefield_initalized()
 {

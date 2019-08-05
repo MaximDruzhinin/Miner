@@ -1,32 +1,39 @@
 #include "GraphicScene/graphiccell.h"
+//#include "logger.h"
+#include <qdebug.h>
 
-
-gui::GraphicCell::GraphicCell(int row, int col, draw::ICellPainter* cell_painter,
+gui::GraphicCell::GraphicCell(int row, int col, QObject* painter,
                          quint8 width, quint8 height):
     Cell(row, col),
-    m_cellPainter(cell_painter),
+    m_painter(painter),
     m_width(width),
     m_height(height)
 {
 
 }
 
+
 void gui::GraphicCell::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    if (m_cellPainter) {
-        m_cellPainter->drawCell(painter, boundingRect(), opened());
+    if (m_painter) {
+        draw::ICellPainter* myPainter = dynamic_cast<draw::ICellPainter*>(m_painter);
+        if (!myPainter) {
+            qDebug () << "Can't cast to draw::IPainter";
+            return;
+        }
+        myPainter->drawCell(painter, boundingRect(), opened());
         if (opened()) {
             if (mined()) {
                 if (detonated())
-                    m_cellPainter->drawMine(painter, boundingRect(), Qt::red);
+                    myPainter->drawMine(painter, boundingRect(), Qt::red);
                 else
-                    m_cellPainter->drawMine(painter, boundingRect());
+                    myPainter->drawMine(painter, boundingRect());
             } else {
                 if (!flagged())
-                    m_cellPainter->drawColorDigit(painter, boundingRect(),digit() );
+                    myPainter->drawColorDigit(painter, boundingRect(),digit() );
                 else {
-                    m_cellPainter->drawMine(painter, boundingRect());
-                    m_cellPainter->drawCross(painter, boundingRect());
+                    myPainter->drawMine(painter, boundingRect());
+                    myPainter->drawCross(painter, boundingRect());
                 }
             }
         } else {
@@ -41,7 +48,7 @@ QRectF gui::GraphicCell::boundingRect() const
     return QRectF(col() * width(), row() * height(), width(), height());
 }
 
-void gui::GraphicCell::show()
+void gui::GraphicCell::changed()
 {
     update();
 }
@@ -56,13 +63,19 @@ quint8 gui::GraphicCell::height() const
     return m_height;
 }
 
-draw::ICellPainter* gui::GraphicCell::cellPainter() const
+QObject* gui::GraphicCell::cellPainter() const
 {
-    return m_cellPainter;
+    return m_painter;
 }
 
 void gui::GraphicCell::drawFlag(QPainter* painter) const
 {
+
+    draw::ICellPainter* myPainter = dynamic_cast<draw::ICellPainter*>(m_painter);
+    if (!myPainter) {
+        qDebug () << "Can't cast to draw::IPainter";
+        return;
+    }
     const int distance = 4;
 
     QRectF rect = boundingRect();
@@ -71,8 +84,8 @@ void gui::GraphicCell::drawFlag(QPainter* painter) const
     int width = rect.width() - 2 * distance;
     int height = rect.height() - 2 * distance;
 
-    if (m_cellPainter)
-        m_cellPainter->drawFlag(painter, QRectF(x, y, width, height));
+    if (myPainter)
+        myPainter->drawFlag(painter, QRectF(x, y, width, height));
 }
 
 

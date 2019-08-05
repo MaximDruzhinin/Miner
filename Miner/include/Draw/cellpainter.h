@@ -4,11 +4,13 @@
 #include "icellpainter.h"
 #include <QPainter>
 #include "Global/draw_global.h"
+#include <qobject.h>
 
 namespace draw {
 
-class  DRAW_EXPORT CellPainter: public ICellPainter {
+class  DRAW_EXPORT CellPainter: public ICellPainter, public QObject {
 public:
+    CellPainter(QObject* parent = nullptr);
     void drawCell(QPainter* painter, const QRectF& rect, bool opened) const override;
     void drawColorDigit(QPainter* painter, const QRectF& rect, quint8 digit) const override;
     void drawCross(QPainter* painter, const QRectF& rect) const override;

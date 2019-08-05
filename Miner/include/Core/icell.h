@@ -6,7 +6,7 @@ namespace core {
 class ICell {
 public:
     virtual ~ICell() {}
-    virtual void show() = 0;
+    virtual void changed() = 0;
     virtual void open(bool detonate) = 0;
     virtual bool empty() const = 0;
     virtual bool setFlag() = 0;

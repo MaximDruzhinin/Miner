@@ -8,6 +8,7 @@
 #include <QStatusBar>
 #include <GraphicScene/factory.h>
 #include "logger.h"
+#include <Draw/cellpainter.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,8 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop);
 
-    m_miner = std::make_shared<core::Game>(nullptr);
-    m_miner->setFactory(new gui::Factory);
+    m_miner = std::make_shared<core::Game>(parent);
+    QObject* painter = new draw::CellPainter(parent);
+    m_miner->setFactory(std::make_shared<gui::Factory>(painter));
 
     if (!runGame(GameType::Beginner)) {
         LOG_ERROR("Game not started");
