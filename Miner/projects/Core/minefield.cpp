@@ -1,10 +1,7 @@
 #include <queue>
 
-//#include "cellpainter.h"
 #include "Core/minefield.h"
 #include "Core/cell.h"
-
-
 
 core::MineField::MineField(quint8 rowCount, quint8 colCount, quint8 mineCount, QObject* parent):
     QObject(parent),
@@ -33,7 +30,7 @@ bool core::MineField::addCell(ICell* cell)
 
 bool core::MineField::addFlagInCell(int row, int col)
 {
-    if (m_firstTimeOpen)
+    if (!isInit())
         return false;
 
     auto cell = at(row, col);
@@ -108,15 +105,17 @@ quint8 core::MineField::mineCount() const
 }
 
 
-void core::MineField::init()
+void core::MineField::init(ICell* cell)
 {
-    if (m_initialized)
+    if (m_isInit)
         return;
 
     if (!m_colCount || !m_rowCount) {
-        m_initialized = false;
+        m_isInit = false;
         return;
     }
+
+    cell->open(true);
 
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
@@ -142,13 +141,8 @@ void core::MineField::init()
             changeDigitInNeibCells(cell);
         }
     }
-    m_initialized = true;
+    m_isInit = true;
     emit on_initialized();
-}
-
-bool core::MineField::initialized() const
-{
-    return m_initialized;
 }
 
 void core::MineField::setEnabled(bool enabled)
@@ -166,11 +160,9 @@ void core::MineField::openCell(ICell* cell)
     if (cell->flagged())
         return;
 
-    if (m_firstTimeOpen) {
-        cell->open(true);
-        init();
-        m_firstTimeOpen = false;
-    }
+    if (!isInit())
+        return;
+
     std::queue<ICell*> q;
     if (!cell->opened()) {
         if (!cell->empty())
@@ -201,9 +193,6 @@ void core::MineField::openCell(ICell* cell)
         }
     }
     while (!q.empty());
-
-    //qDebug () << "======openCell=======";
-
 }
 
 void core::MineField::openUnrevealedMines()
@@ -232,11 +221,15 @@ size_t core::MineField::revealedMineCount() const
     return m_revealedMineCount;
 }
 
+bool core::MineField::isInit() const
+{
+    return m_isInit;
+}
+
 void core::MineField::on_detonation_cell()
 {
     emit detonationCell();
 }
-
 
 void core::MineField::changeDigitInNeibCells(ICell* cell)
 {

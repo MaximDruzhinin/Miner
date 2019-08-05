@@ -40,6 +40,10 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     gui::GraphicCell* cell = dynamic_cast<gui::GraphicCell*>(item);
     if (cell) {
         if (event->button() == Qt::LeftButton) {
+            if (m_firstClick) {
+                init(cell);
+                m_firstClick = false;
+            }
             openCell(cell);
         }
 

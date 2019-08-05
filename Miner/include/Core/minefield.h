@@ -30,8 +30,7 @@ public:
     quint8 rowCount() const;
     quint8 colCount() const;
     quint8 mineCount() const;
-    void init();
-    bool initialized() const;
+    void init(ICell* cell);
     void setEnabled(bool enabled);
     bool enabled() const;
     void openCell(ICell* cell);
@@ -39,6 +38,7 @@ public:
     void openIncorrectFlagged();
     size_t flagCount() const;
     size_t revealedMineCount() const;
+    bool isInit() const;
 
 signals:
     void flagSetted() ;
@@ -55,13 +55,12 @@ private:
     quint8 m_rowCount;
     quint8 m_colCount;
     quint8 m_mineCount;
-    bool m_initialized = false;
+    bool m_isInit = false;
     bool m_enabled = true;
     std::vector<std::vector<ICell*>> m_cells;
     std::set<ICell*> m_mineCells;
     std::set<ICell*> m_flagCells;
     quint8 m_revealedMineCount = 0;
-    bool m_firstTimeOpen = true;
 };
 
 }

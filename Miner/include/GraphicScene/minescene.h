@@ -25,6 +25,7 @@ private:
     quint8 m_cellWidth;
     quint8 m_cellHeight;
     QGraphicsView* m_graphicsView = nullptr;
+    bool m_firstClick = true;
 };
 }
 
