@@ -14,16 +14,12 @@ namespace gui {
 
 class GRAPHICSCENE_EXPORT MineScene:  public QGraphicsScene, public core::MineField {
 public:
-    MineScene(quint8 rowCount = 9, quint8 colCount = 9, quint8 mineCount = 10, QObject* parent = 0);
+    MineScene(uint rowCount = 9, uint colCount = 9, uint mineCount = 10, QObject* parent = nullptr);
     bool addCell(core::ICell* cell) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-    quint8 cellWidth() const;
-    quint8 cellHeight() const;
     void setView(QGraphicsView* view);
 
 private:
-    quint8 m_cellWidth;
-    quint8 m_cellHeight;
     QGraphicsView* m_graphicsView = nullptr;
     bool m_firstClick = true;
 };

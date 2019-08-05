@@ -7,9 +7,10 @@
 #include <queue>
 #include <QGraphicsItem>
 #include <QGraphicsView>
+#include "logger.h"
 
 
-gui::MineScene::MineScene(quint8 rowCount, quint8 colCount, quint8 mineCount, QObject* parent):
+gui::MineScene::MineScene(uint rowCount, uint colCount, uint mineCount, QObject* parent):
     MineField(rowCount, colCount, mineCount, parent)
 {
 }
@@ -20,13 +21,14 @@ bool gui::MineScene::addCell(core::ICell* cell)
         return false;
 
     QGraphicsItem* item = dynamic_cast<QGraphicsItem*>(cell);
-
-    if (item) {
-        addItem(item);
-        return true;
-    }
-    else
+    if (!item) {
+        LOG_ERROR("Invalid cast to QGraphicsItem");
         return false;
+    }
+
+    addItem(item);
+
+    return true;
 }
 
 void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -38,45 +40,45 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     QGraphicsItem* item = itemAt(event->scenePos(), QTransform());
     gui::GraphicCell* cell = dynamic_cast<gui::GraphicCell*>(item);
-    if (cell) {
-        if (event->button() == Qt::LeftButton) {
-            if (m_firstClick) {
-                init(cell);
-                m_firstClick = false;
-            }
-            openCell(cell);
+    if (!cell) {
+        LOG_ERROR("Invalid cast to gui::GraphicCell");
+        return;
+    }
+    if (event->button() == Qt::LeftButton) {
+        if (m_firstClick) {
+            init(cell);
+            m_firstClick = false;
         }
+        openCell(cell);
+    }
 
-        if (event->button() == Qt::RightButton) {
-            if (!cell->flagged())
-                addFlagInCell(cell->row(), cell->col());
-            else
-                removeFlagFromCell(cell->row(), cell->col());
-        }
+    if (event->button() == Qt::RightButton) {
+        if (!cell->flagged())
+            addFlagInCell(cell->row(), cell->col());
+        else
+            removeFlagFromCell(cell->row(), cell->col());
     }
     QGraphicsScene::mousePressEvent(event);
-}
-
-quint8 gui::MineScene::cellWidth() const
-{
-    return m_cellWidth;
-}
-
-quint8 gui::MineScene::cellHeight() const
-{
-    return m_cellHeight;
 }
 
 void gui::MineScene::setView(QGraphicsView* view)
 {
     m_graphicsView = view;
-    if (!m_graphicsView)
+
+    if (!m_graphicsView) {
+        LOG_ERROR("m_graphicsView is nullptr")
         return;
+    }
 
     m_graphicsView->setScene(this);
 
-    m_graphicsView->setGeometry(0,0, cellWidth() * colCount() + 1, cellHeight() * rowCount() + 1);
+    GraphicCell* cell = dynamic_cast<GraphicCell*>(at(0,0));
+    if (!cell) {
+        LOG_ERROR("Invalid cast to gui::GraphicCell");
+        return;
+    }
 
+    m_graphicsView->setGeometry(0, 0, static_cast<int>(cell->width() * colCount()) + 1, static_cast<int>(cell->height() * rowCount()) + 1);
 }
 
 

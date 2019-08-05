@@ -2,7 +2,7 @@
 #include <qdebug.h>
 
 gui::GraphicCell::GraphicCell(int row, int col, QObject* painter,
-                         quint8 width, quint8 height):
+                         uint width, uint height):
     Cell(row, col),
     m_painter(painter),
     m_width(width),
@@ -51,12 +51,12 @@ void gui::GraphicCell::changed()
     update();
 }
 
-quint8 gui::GraphicCell::width() const
+uint gui::GraphicCell::width() const
 {
     return m_width;
 }
 
-quint8 gui::GraphicCell::height() const
+uint gui::GraphicCell::height() const
 {
     return m_height;
 }

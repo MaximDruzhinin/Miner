@@ -18,6 +18,7 @@ namespace core {
 
 class Factory {
 public:
+    virtual ~Factory() {};
     virtual core::ICell* createCell(int row, int col, QObject* parent = nullptr) = 0;
     virtual std::shared_ptr<MineField> createMineField(int rowCount, int colCount, int mineCount) = 0;
 };

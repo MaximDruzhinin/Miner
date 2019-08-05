@@ -21,15 +21,15 @@ namespace core {
 class CORE_EXPORT MineField : public QObject {
     Q_OBJECT
 public:
-    MineField(quint8 rowCount = 9, quint8 colCount = 9, quint8 mineCount = 10, QObject* parent = 0);
+    MineField(uint rowCount = 9, uint colCount = 9, uint mineCount = 10, QObject* parent = nullptr);
     virtual bool addCell(ICell* cell);
     bool addFlagInCell(int row, int col);
     bool removeFlagFromCell(int row, int col);
     ICell* at(int row, int col) const;
     bool outOfRange(int row, int col) const;
-    quint8 rowCount() const;
-    quint8 colCount() const;
-    quint8 mineCount() const;
+    uint rowCount() const;
+    uint colCount() const;
+    uint mineCount() const;
     void init(ICell* cell);
     void setEnabled(bool enabled);
     bool enabled() const;
@@ -52,15 +52,15 @@ public slots:
 private:
     void changeDigitInNeibCells(ICell* cell);
     std::set<ICell*> neibCells(int row, int col) const;
-    quint8 m_rowCount;
-    quint8 m_colCount;
-    quint8 m_mineCount;
+    uint m_rowCount;
+    uint m_colCount;
+    uint m_mineCount;
     bool m_isInit = false;
     bool m_enabled = true;
     std::vector<std::vector<ICell*>> m_cells;
     std::set<ICell*> m_mineCells;
     std::set<ICell*> m_flagCells;
-    quint8 m_revealedMineCount = 0;
+    uint m_revealedMineCount = 0;
 };
 
 }

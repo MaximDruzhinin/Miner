@@ -3,7 +3,7 @@
 #include "Core/minefield.h"
 #include "Core/cell.h"
 
-core::MineField::MineField(quint8 rowCount, quint8 colCount, quint8 mineCount, QObject* parent):
+core::MineField::MineField(uint rowCount, uint colCount, uint mineCount, QObject* parent):
     QObject(parent),
     m_rowCount(rowCount),
     m_colCount(colCount),
@@ -90,17 +90,17 @@ bool core::MineField::outOfRange(int row, int col) const
     return (row < 0 || col < 0 || col > m_colCount - 1 || row > m_rowCount - 1);
 }
 
-quint8 core::MineField::rowCount() const
+uint core::MineField::rowCount() const
 {
     return m_rowCount;
 }
 
-quint8 core::MineField::colCount() const
+uint core::MineField::colCount() const
 {
     return m_colCount;
 }
 
-quint8 core::MineField::mineCount() const
+uint core::MineField::mineCount() const
 {
     return m_mineCount;
 }
