@@ -6,21 +6,27 @@
 #include "Global/graphic_scene_global.h"
 #include <GraphicScene/factory.h>
 
-namespace game {
 
-    class GRAPHICSCENE_EXPORT Miner : public MinerCore
-    {
-    public:
-        //Miner(QGraphicsView* graphics_view, QWidget *parent = 0);
-        Miner(base::Factory* fact);
-    private:
-        //QGraphicsView* m_graphicsView = nullptr;
-        base::Factory* m_fact = nullptr;
-    protected:
-        //base::MineField* createMineField(qint8 rowCount, qint8 colCount, quint16 mineCount) override;
+class Miner : public core::Game {
+    Q_OBJECT
+public:
+    Miner(QGraphicsView* view, QObject* parent = nullptr);
+    bool runGame(GameType type);
+    uint flagCount();
+    uint mineCount();
 
-    };
+private:
+    QObject* m_painter = nullptr;
+    std::shared_ptr<core::MineField> m_minefield;
+    QGraphicsView* m_view = nullptr;
+    //QTimer* m_timer = nullptr;
 
-}
+signals:
+    void timeout();
+private slots:
+    void onTimeout();
+
+};
+
 
 #endif // MINER_H

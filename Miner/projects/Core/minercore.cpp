@@ -1,6 +1,6 @@
 #include "Core/minercore.h"
 #include "logger.h"
-//#include <Draw/cellpainter.h>
+
 
 core::Game::Game(QObject* parent): QObject(parent), m_time(0,0,0)
 {
@@ -15,19 +15,19 @@ std::shared_ptr<core::MineField> core::Game::run(GameType type)
 
     switch (type){
     case GameType::Beginner:
-        colCount = 9;
-        rowCount = 9;
-        mineCount = 10;
+        colCount = Presets::BEGINNER_COL_COUNT;
+        rowCount = Presets::BEGINNER_ROW_COUNT;
+        mineCount = Presets::BEGINNER_MINE_COUNT;
         break;
     case GameType::Medium:
-        colCount = 16;
-        rowCount = 16;
-        mineCount = 40;
+        colCount = Presets::MEDIUM_COL_COUNT;
+        rowCount = Presets::MEDIUM_ROW_COUNT;
+        mineCount = Presets::MEDIUM_MINE_COUNT;
         break;
     case GameType::Expert:
-        colCount = 30;
-        rowCount = 16;
-        mineCount = 99;
+        colCount = Presets::EXPERT_COL_COUNT;
+        rowCount = Presets::EXPERT_ROW_COUNT;
+        mineCount = Presets::EXPERT_MINE_COUNT;
         break;
     }
 

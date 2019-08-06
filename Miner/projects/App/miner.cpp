@@ -5,31 +5,50 @@
 #include <GraphicScene/minescene.h>
 #include <qgraphicsview.h>
 #include <GraphicScene/factory.h>
+#include <memory>
+#include <logger.h>
+#include <QTimer>
 
 
+Miner::Miner(QGraphicsView *view, QObject *parent): m_view(view)
+{
+    m_painter = new draw::CellPainter(parent);
+    setFactory(std::make_shared<gui::Factory>(m_painter));
+}
 
-//game::Miner::Miner(QGraphicsView *graphicsView, QWidget* parent): MinerCore(nullptr),
-//    m_graphicsView(graphicsView)
-//{
+bool Miner::runGame(GameType type)
+{
+    if (!m_view) {
+        LOG_ERROR("Graphics View is NULL");
+        return false;
+    }
+    m_minefield = run(type);
+    if (!m_minefield) {
+        LOG_ERROR("Failed init minefield")
+        return false;
+    }
 
-//}
+    std::shared_ptr<gui::MineScene> scene = std::dynamic_pointer_cast<gui::MineScene>(m_minefield);
+    if (!scene) {
+        LOG_ERROR("Invalid cast to gui::MineScene")
+        return false;
+    }
+    scene->setView(m_view);
 
-game::Miner::Miner(base::Factory* fact): MinerCore(nullptr), m_fact(fact)
+    return true;
+}
+
+uint Miner::flagCount()
+{
+    return m_minefield ? m_minefield->flagCount() : 0;
+}
+
+uint Miner::mineCount()
+{
+    return m_minefield ? m_minefield->mineCount() : 0;
+}
+
+void Miner::onTimeout()
 {
 
 }
-
-//base::MineField* game::Miner::createMineField(qint8 rowCount, qint8 colCount, quint16 mineCount)
-//{
-//    const int cellWidth = 20;
-//    const int cellHeight = 20;
-
-//    if (!m_fact) {
-//        qDebug () << "Dsdsdsdsds==========";
-//        return nullptr;
-//    }
-//    base::MineField* minefield= m_fact->createMineField(rowCount, colCount, mineCount);
-
-
-//    return minefield;
-//}

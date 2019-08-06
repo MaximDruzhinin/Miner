@@ -1,7 +1,8 @@
 #ifndef ICELL_H
 #define ICELL_H
 
-#include <QObject>
+#include <qobject.h>
+
 namespace core {
 class ICell {
 public:
@@ -17,8 +18,8 @@ public:
     virtual bool opened() const = 0;
     virtual void setReadyOpen(bool _readyOpened) = 0;
     virtual bool readyOpened() const = 0;
-    virtual int col() const = 0;
-    virtual int row() const = 0;
+    virtual uint col() const = 0;
+    virtual uint row() const = 0;
     virtual void setMine() = 0;
     virtual bool mined() const = 0;
     virtual bool detonated() const = 0;

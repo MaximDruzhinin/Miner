@@ -9,9 +9,10 @@
 #include <GraphicScene/factory.h>
 #include "logger.h"
 #include <Draw/cellpainter.h>
+#include "miner.h"
 
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -20,61 +21,48 @@ MainWindow::MainWindow(QWidget *parent) :
     setStatusBar(m_statusBar);
 
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+    m_statusBar->setGeometry(0, 0, 0, 20);
 
-    m_miner = std::make_shared<core::Game>(parent);
-    QObject* painter = new draw::CellPainter(parent);
-    m_miner->setFactory(std::make_shared<gui::Factory>(painter));
+    m_miner = std::make_shared<Miner>(ui->graphicsView, parent);
 
-    if (!runGame(GameType::Beginner)) {
+    if (!m_miner->runGame(GameType::Beginner)) {
         LOG_ERROR("Game not started");
         return;
     }
+    resizeWindow();
 
-    m_timer = new QTimer;
-    m_timer->start();
+    updateStatusBar();
 
-    QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(on_timeout()));
-    QObject::connect(m_miner.get(), SIGNAL(on_flagSetted()), this, SLOT(onFlagSetted()));
-    QObject::connect(m_miner.get(), SIGNAL(on_gameIsWin()), this, SLOT(onGameIsWin()));
-    QObject::connect(m_miner.get(), SIGNAL(on_flagRemoved()), this, SLOT(onFlagRemoved()));
+    m_timer = new QTimer(parent);
+    m_timer->start(100);
+
+    connect(m_miner.get(), SIGNAL(on_flagSetted()), this, SLOT(onFlagSetted()));
+    connect(m_miner.get(), SIGNAL(on_gameIsWin()), this, SLOT(onGameIsWin()));
+    connect(m_miner.get(), SIGNAL(on_flagRemoved()), this, SLOT(onFlagRemoved()));
+    connect(m_miner.get(), SIGNAL(timeout()), this, SLOT(onMinerTimeout()));
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(on_timeout()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete m_statusBar;
-    delete m_timer;
 }
 
 void MainWindow::updateStatusBar()
 {
-    if (!m_minefield) {
-        LOG_ERROR("m_minefield is null");
-        return;
-    }
-
     QString text;
-    auto flags = m_minefield->flagCount();
-    auto mines = m_minefield->mineCount();
+    uint flags = m_miner->flagCount();
+    uint mines = m_miner->mineCount();
     QTime time = m_miner->timeElapsed();
     text = QString("Мины: %1 / %2   Время  %3").arg(flags).arg(mines).arg(time.toString("mm:ss"));
     m_statusBar->showMessage(text);
 }
 
-bool MainWindow::runGame(GameType type)
+void MainWindow::resizeWindow()
 {
-    m_minefield = m_miner->run(type);
-    if (!m_minefield) {
-        LOG_ERROR("Failed init minefield")
-        return false;
-    }
-    std::shared_ptr<gui::MineScene> scene = std::dynamic_pointer_cast<gui::MineScene>(m_minefield);
-    if (!scene) {
-        LOG_ERROR("Can't cast to gui::MineScene")
-        return false;
-    }
-    scene->setView(ui->graphicsView);
-    return true;
+    const QRectF& rect = ui->graphicsView->geometry();
+    setFixedSize(QSize(rect.width(), rect.height() + m_statusBar->height() + menuBar()->height()+ ui->mainToolBar->height()));
 }
 
 void MainWindow::onFlagSetted()
@@ -99,10 +87,8 @@ void MainWindow::onGameIsWin()
 
 void MainWindow::on_action_beginner_triggered()
 {
-    if (!runGame(GameType::Beginner)) {
-        LOG_ERROR("Game not started");
-        return;
-    }
+    if (m_miner->runGame(GameType::Beginner))
+        resizeWindow();
 }
 
 void MainWindow::on_action_exit_triggered()
@@ -112,12 +98,17 @@ void MainWindow::on_action_exit_triggered()
 
 void MainWindow::on_action_medium_triggered()
 {
-   if (!runGame(GameType::Medium))
-       LOG_ERROR("Game not started");
+    if (m_miner->runGame(GameType::Medium))
+        resizeWindow();
 }
 
 void MainWindow::on_action_expert_triggered()
 {
-   if (!runGame(GameType::Expert))
-       LOG_ERROR("Game not started");
+    if (m_miner->runGame(GameType::Expert))
+        resizeWindow();
+}
+
+void MainWindow::onMinerTimeout()
+{
+    updateStatusBar();
 }

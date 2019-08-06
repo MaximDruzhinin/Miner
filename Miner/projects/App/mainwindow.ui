@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>451</height>
+    <width>574</width>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>560</width>
+     <width>574</width>
      <height>21</height>
     </rect>
    </property>
@@ -63,7 +63,17 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+  </widget>
   <action name="action_beginner">
    <property name="text">
     <string>Новичок</string>

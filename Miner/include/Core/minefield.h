@@ -1,17 +1,13 @@
 #ifndef MINEFIELD_H
 #define MINEFIELD_H
 
-#include <QObject>
-
-//#include <QGraphicsScene>
+#include <qobject.h>
 #include "icell.h"
 #include <QtCore>
 #include <QtGui>
-//#include <QGraphicsSceneMoveEvent>
 #include <set>
 #include <memory>
 #include <QVector>
-
 #include "Global/core_global.h"
 
 class ICellPainter;
@@ -36,8 +32,8 @@ public:
     void openCell(ICell* cell);
     void openUnrevealedMines();
     void openIncorrectFlagged();
-    size_t flagCount() const;
-    size_t revealedMineCount() const;
+    uint flagCount() const;
+    uint revealedMineCount() const;
     bool isInit() const;
 
 signals:
@@ -51,10 +47,10 @@ public slots:
 
 private:
     void changeDigitInNeibCells(ICell* cell);
-    std::set<ICell*> neibCells(int row, int col) const;
-    uint m_rowCount;
-    uint m_colCount;
-    uint m_mineCount;
+    std::set<ICell*> neibCells(uint row, uint col) const;
+    uint m_rowCount = 0;
+    uint m_colCount = 0;
+    uint m_mineCount = 0;
     bool m_isInit = false;
     bool m_enabled = true;
     std::vector<std::vector<ICell*>> m_cells;

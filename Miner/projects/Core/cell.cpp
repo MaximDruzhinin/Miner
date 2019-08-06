@@ -3,14 +3,12 @@
 #include <qdebug.h>
 
 
-core::Cell::Cell(int row, int col, QObject* parent):
+core::Cell::Cell(uint row, uint col, QObject* parent):
     QObject(parent),
     m_row(row),
     m_col(col)
 {
-
 }
-
 
 void core::Cell::open(bool detonate)
 {
@@ -78,12 +76,12 @@ bool core::Cell::readyOpened() const
     return m_readyOpened;
 }
 
-int core::Cell::col() const
+uint core::Cell::col() const
 {
     return m_col;
 }
 
-int core::Cell::row() const
+uint core::Cell::row() const
 {
     return m_row;
 }

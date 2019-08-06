@@ -6,7 +6,7 @@
 #include <QGraphicsView>
 #include "GraphicScene/minescene.h"
 #include "Core/minercore.h"
-//#include "miner.h"
+#include "miner.h"
 #include <memory>
 
 class QTimer;
@@ -20,20 +20,16 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    gui::MineScene* m_mineField;
     QTimer* m_timer;
-    //core::Game* m_miner = nullptr;
-    std::shared_ptr<core::Game> m_miner;
+    std::shared_ptr<Miner> m_miner;
     QStatusBar* m_statusBar;
     void updateStatusBar();
-    //core::MineField* m_minefield = nullptr;
-    std::shared_ptr<core::MineField> m_minefield;
-    bool runGame(GameType type);
+    void resizeWindow();
 
 private slots:
     void onFlagSetted();
@@ -44,6 +40,7 @@ private slots:
     void on_action_beginner_triggered();
     void on_action_medium_triggered();
     void on_action_expert_triggered();
+    void onMinerTimeout();
 };
 
 #endif // MAINWINDOW_H

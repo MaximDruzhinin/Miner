@@ -1,5 +1,4 @@
 #include <queue>
-
 #include "Core/minefield.h"
 #include "Core/cell.h"
 
@@ -11,7 +10,7 @@ core::MineField::MineField(uint rowCount, uint colCount, uint mineCount, QObject
 {
     m_cells.resize(rowCount);
 
-    for (auto i = 0; i < rowCount; i++)
+    for (uint i = 0; i < rowCount; i++)
         m_cells[i].resize(colCount);
 }
 
@@ -20,12 +19,11 @@ bool core::MineField::addCell(ICell* cell)
     if (!cell)
         return false;
 
-    auto row = cell->row();
-    auto col = cell->col();
+    uint row = cell->row();
+    uint col = cell->col();
     m_cells[row][col] = cell;
 
     return true;
-
 }
 
 bool core::MineField::addFlagInCell(int row, int col)
@@ -60,7 +58,6 @@ bool core::MineField::removeFlagFromCell(int row, int col)
         return false;
 
     if (cell->removeFlag()) {
-        //auto pos = qFind(m_flagCells.begin(), m_flagCells.end(), cell);
         auto pos = std::find(m_flagCells.begin(), m_flagCells.end(), cell);
         if (pos != m_flagCells.end()) {
             m_flagCells.erase(pos);
@@ -69,12 +66,9 @@ bool core::MineField::removeFlagFromCell(int row, int col)
             emit flagRemoved();
             return true;
         }
-//        else
-//            return false;
     }
-    //else
-    return false;
 
+    return false;
 }
 
 core::ICell* core::MineField::at(int row, int col) const
@@ -87,7 +81,7 @@ core::ICell* core::MineField::at(int row, int col) const
 
 bool core::MineField::outOfRange(int row, int col) const
 {
-    return (row < 0 || col < 0 || col > m_colCount - 1 || row > m_rowCount - 1);
+    return (row < 0 || col < 0 || col > static_cast<int>(m_colCount) - 1 || row > static_cast<int>(m_rowCount) - 1);
 }
 
 uint core::MineField::rowCount() const
@@ -105,7 +99,7 @@ uint core::MineField::mineCount() const
     return m_mineCount;
 }
 
-
+//генерация мин перестановками
 void core::MineField::init(ICell* cell)
 {
     if (m_isInit)
@@ -118,16 +112,16 @@ void core::MineField::init(ICell* cell)
 
     cell->open(true);
 
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(static_cast<uint>(QTime(0,0,0).secsTo(QTime::currentTime())));
 
-    std::vector<int> numbers(m_colCount* m_rowCount, 0);
-    for (auto i = 0; i < numbers.size(); i++)
-        numbers[i] = i;
+    std::vector<uint> numbers(m_colCount * m_rowCount, 0);
+    for (std::size_t i = 0; i < numbers.size(); i++)
+        numbers[i] = static_cast<uint>(i);
 
-    for (auto i = 0; i < m_mineCount;) {
-        int r = rand() % (numbers.size()-1-i) + i;
-        int col = numbers[r] / m_rowCount;
-        int row = numbers[r] % m_rowCount;
+    for (uint i = 0; i < m_mineCount;) {
+        uint r = rand() % (numbers.size() - 1 - i) + i;
+        uint col = numbers[r] / m_rowCount;
+        uint row = numbers[r] % m_rowCount;
 
         auto cell = m_cells[row][col];
         if (!cell->opened()) {
@@ -157,6 +151,8 @@ bool core::MineField::enabled() const
     return m_enabled;
 }
 
+//При открытии пустой клетки, должны рекурсивно открываться ее пустые соседи, однако рекурсия может сломать стек,
+// поэтому реализация будет через очередь
 void core::MineField::openCell(ICell* cell)
 {
     if (cell->flagged())
@@ -213,12 +209,12 @@ void core::MineField::openIncorrectFlagged()
     }
 }
 
-size_t core::MineField::flagCount() const
+uint core::MineField::flagCount() const
 {
-    return m_flagCells.size();
+    return static_cast<uint>(m_flagCells.size());
 }
 
-size_t core::MineField::revealedMineCount() const
+uint core::MineField::revealedMineCount() const
 {
     return m_revealedMineCount;
 }
@@ -243,13 +239,13 @@ void core::MineField::changeDigitInNeibCells(ICell* cell)
    }
 }
 
-std::set<core::ICell*> core::MineField::neibCells(int row, int col) const
+std::set<core::ICell*> core::MineField::neibCells(uint row, uint col) const
 {
     std::set<ICell*> neibs;
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++ ) {
             if (i || j) {
-                auto neib = at(row + i, col + j);
+                auto neib = at(static_cast<int>(row) + i, static_cast<int>(col) + j);
                 if (neib)
                     neibs.insert(neib);
             }

@@ -11,7 +11,7 @@ namespace core {
 class CORE_EXPORT Cell: public QObject, public ICell {
     Q_OBJECT
 public:
-    Cell(int col, int row, QObject* parent = 0);
+    Cell(uint col, uint row, QObject* parent = nullptr);
     void open(bool detonate) override;
     bool empty() const override;
     bool setFlag() override;
@@ -22,18 +22,18 @@ public:
     bool opened() const override;
     void setReadyOpen(bool ready_opened) override;
     bool readyOpened() const override;
-    int col() const override;
-    int row() const override;
+    uint col() const override;
+    uint row() const override;
     void setMine() override;
     bool mined() const override;
     bool detonated() const override;
 signals:
-    void detonation();
+    void detonation() override;
 private:
     bool m_opened = false;
     bool m_flagged = false;
-    int m_row;
-    int m_col;
+    uint m_row;
+    uint m_col;
     int m_digit = 0;
     bool m_readyOpened = false;
     bool m_detonated = false;
