@@ -18,7 +18,7 @@ file(GLOB SOURCE
     minescene.cpp
     factory.cpp
     #cellpainter.cpp
-    #miner.cpp
+    miner.cpp
     ${GLOBAL_INCLUDE_PATH}/GraphicScene/graphiccell.h
     ${GLOBAL_INCLUDE_PATH}/Global/graphic_scene_global.h
     ${GLOBAL_INCLUDE_PATH}/GraphicScene/minescene.h
@@ -26,6 +26,9 @@ file(GLOB SOURCE
     ${GLOBAL_INCLUDE_PATH}/Core/cell.h
     ${GLOBAL_INCLUDE_PATH}/Core/minefield.h
     ${GLOBAL_INCLUDE_PATH}/GraphicScene/factory.h
+    ${GLOBAL_INCLUDE_PATH}/GraphicScene/miner.h
+    ${GLOBAL_INCLUDE_PATH}/GraphicScene/logger.h
+    ${GLOBAL_INCLUDE_PATH}/Core/minercore.h
     )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

@@ -1,8 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <QObject>
-
+#include <qobject.h>
 #include "icell.h"
 #include "Global/core_global.h"
 

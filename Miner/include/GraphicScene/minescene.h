@@ -18,7 +18,6 @@ public:
     bool addCell(core::ICell* cell) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void setView(QGraphicsView* view);
-
 private:
     QGraphicsView* m_graphicsView = nullptr;
     bool m_firstClick = true;

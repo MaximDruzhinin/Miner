@@ -6,7 +6,7 @@
 #include <QGraphicsView>
 #include "GraphicScene/minescene.h"
 #include "Core/minercore.h"
-#include "miner.h"
+#include "GraphicScene/miner.h"
 #include <memory>
 
 class QTimer;
@@ -22,7 +22,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 private:
     Ui::MainWindow *ui;
     QTimer* m_timer;
@@ -30,7 +29,6 @@ private:
     QStatusBar* m_statusBar;
     void updateStatusBar();
     void resizeWindow();
-
 private slots:
     void onFlagSetted();
     void onFlagRemoved();

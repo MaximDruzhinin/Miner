@@ -9,7 +9,6 @@
 #include <QGraphicsView>
 #include "logger.h"
 
-
 gui::MineScene::MineScene(uint rowCount, uint colCount, uint mineCount, QObject* parent):
     MineField(rowCount, colCount, mineCount, parent)
 {
@@ -44,6 +43,7 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         LOG_ERROR("Invalid cast to gui::GraphicCell");
         return;
     }
+
     if (event->button() == Qt::LeftButton) {
         if (m_firstClick) {
             init(cell);
@@ -58,6 +58,7 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         else
             removeFlagFromCell(cell->row(), cell->col());
     }
+
     QGraphicsScene::mousePressEvent(event);
 }
 
@@ -80,11 +81,3 @@ void gui::MineScene::setView(QGraphicsView* view)
 
     m_graphicsView->setGeometry(0, 0, static_cast<int>(cell->width() * colCount()) + 1, static_cast<int>(cell->height() * rowCount()) + 1);
 }
-
-
-
-
-
-
-
-

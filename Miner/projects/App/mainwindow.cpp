@@ -9,7 +9,6 @@
 #include <GraphicScene/factory.h>
 #include "logger.h"
 #include <Draw/cellpainter.h>
-#include "miner.h"
 
 
 MainWindow::MainWindow(QWidget* parent) :

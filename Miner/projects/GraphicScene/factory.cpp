@@ -5,7 +5,6 @@
 #include "Draw/cellpainter.h"
 #include "Core/minefield.h"
 
-
 gui::Factory::Factory(QObject* painter): m_painter(painter)
 {
 }

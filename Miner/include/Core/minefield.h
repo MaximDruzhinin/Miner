@@ -35,16 +35,13 @@ public:
     uint flagCount() const;
     uint revealedMineCount() const;
     bool isInit() const;
-
 signals:
     void flagSetted() ;
     void flagRemoved();
     void on_initialized();
     void detonationCell();
-
 public slots:
     void on_detonation_cell();
-
 private:
     void changeDigitInNeibCells(ICell* cell);
     std::set<ICell*> neibCells(uint row, uint col) const;

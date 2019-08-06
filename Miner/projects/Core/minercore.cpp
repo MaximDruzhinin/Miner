@@ -1,7 +1,6 @@
 #include "Core/minercore.h"
 #include "logger.h"
 
-
 core::Game::Game(QObject* parent): QObject(parent), m_time(0,0,0)
 {
 }

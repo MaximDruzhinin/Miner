@@ -18,7 +18,6 @@ public:
     uint width() const;
     uint height() const;
     QObject* cellPainter() const;
-
 private:
     QObject* m_painter = nullptr;
     uint m_width = 0;

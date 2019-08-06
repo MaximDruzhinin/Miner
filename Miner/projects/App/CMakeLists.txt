@@ -19,7 +19,6 @@ add_executable(miner
     mainwindow.ui
     main.cpp
     mainwindow.cpp
-    miner.cpp
     ${GLOBAL_INCLUDE_PATH}/mainwindow.h
     ${GLOBAL_INCLUDE_PATH}/GraphicScene/graphiccell.h
     ${GLOBAL_INCLUDE_PATH}/Core/cell.h
@@ -28,12 +27,13 @@ add_executable(miner
     ${GLOBAL_INCLUDE_PATH}/Core/minefield.h
     ${GLOBAL_INCLUDE_PATH}/GraphicScene/minescene.h
     ${GLOBAL_INCLUDE_PATH}/Core/minercore.h
-    ${GLOBAL_INCLUDE_PATH}/miner.h
+    ${GLOBAL_INCLUDE_PATH}/GraphicScene/miner.h
     ${GLOBAL_INCLUDE_PATH}/Core/icell.h
     ${GLOBAL_INCLUDE_PATH}/Global/core_global.h
     ${GLOBAL_INCLUDE_PATH}/Global/graphic_scene_global.h
     ${GLOBAL_INCLUDE_PATH}/Global/draw_global.h
     ${GLOBAL_INCLUDE_PATH}/logger.h
+    ${GLOBAL_INCLUDE_PATH}/info_defines.h
 )
 
 

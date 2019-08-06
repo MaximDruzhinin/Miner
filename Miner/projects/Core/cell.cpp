@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <qdebug.h>
 
-
 core::Cell::Cell(uint row, uint col, QObject* parent):
     QObject(parent),
     m_row(row),
