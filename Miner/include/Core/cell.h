@@ -2,7 +2,7 @@
 #define CELL_H
 
 #include <qobject.h>
-#include "icell.h"
+#include "interfaces/icell.h"
 #include "global/core_global.h"
 
 namespace core {

@@ -2,7 +2,7 @@
 #define MINEFIELD_H
 
 #include <qobject.h>
-#include "icell.h"
+#include "interfaces/icell.h"
 #include <QtCore>
 #include <QtGui>
 #include <set>

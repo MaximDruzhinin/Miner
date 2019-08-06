@@ -6,7 +6,7 @@
 #include <memory>
 #include "global/core_global.h"
 #include "core/minefield.h"
-#include <core/factory_core.h>
+#include <interfaces/ifactory.h>
 #include "info_defines.h"
 
 namespace core {

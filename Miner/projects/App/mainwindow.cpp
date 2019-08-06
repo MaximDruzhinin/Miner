@@ -10,7 +10,6 @@
 #include "logger.h"
 #include "draw/painter.h"
 
-
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)

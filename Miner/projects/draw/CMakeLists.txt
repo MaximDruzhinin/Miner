@@ -13,7 +13,6 @@ add_definitions(-DDRAW_LIBRARY -D_CRT_SECURE_NO_WARNINGS)
 file(GLOB SOURCE
     painter.cpp
     ${GLOBAL_INCLUDE_PATH}/draw/painter.h
-    ${GLOBAL_INCLUDE_PATH}/draw/ipainter.h
     )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

@@ -3,10 +3,10 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(GRAPHICSCENE_LIBRARY)
-#  define GRAPHICSCENE_EXPORT Q_DECL_EXPORT
+#if defined(GUI_LIBRARY)
+#  define GUI_EXPORT Q_DECL_EXPORT
 #else
-#  define GRAPHICSCENE_EXPORT Q_DECL_IMPORT
+#  define GUI_EXPORT Q_DECL_IMPORT
 #endif
 
 

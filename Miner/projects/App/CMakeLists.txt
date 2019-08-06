@@ -19,19 +19,13 @@ add_executable(miner
     main.cpp
     mainwindow.cpp
     ${GLOBAL_INCLUDE_PATH}/mainwindow.h
-    ${GLOBAL_INCLUDE_PATH}/draw/ipainter.h
     ${GLOBAL_INCLUDE_PATH}/draw/painter.h
     ${GLOBAL_INCLUDE_PATH}/core/cell.h
     ${GLOBAL_INCLUDE_PATH}/core/minefield.h
     ${GLOBAL_INCLUDE_PATH}/core/game.h
-    ${GLOBAL_INCLUDE_PATH}/core/icell.h
     ${GLOBAL_INCLUDE_PATH}/gui/graphic_cell.h
     ${GLOBAL_INCLUDE_PATH}/gui/mine_scene.h
     ${GLOBAL_INCLUDE_PATH}/gui/miner.h
-    ${GLOBAL_INCLUDE_PATH}/global/core_global.h
-    ${GLOBAL_INCLUDE_PATH}/global/draw_global.h
-    ${GLOBAL_INCLUDE_PATH}/logger.h
-    ${GLOBAL_INCLUDE_PATH}/info_defines.h
 )
 
 target_link_libraries(miner Qt5::Widgets core gui draw)

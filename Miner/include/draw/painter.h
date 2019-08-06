@@ -1,7 +1,7 @@
 #ifndef MINERPAINTER_H
 #define MINERPAINTER_H
 
-#include "ipainter.h"
+#include "interfaces/ipainter.h"
 #include <QPainter>
 #include "global/draw_global.h"
 #include <qobject.h>

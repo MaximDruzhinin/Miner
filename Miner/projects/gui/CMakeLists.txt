@@ -11,7 +11,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 
 link_directories(${LIBRARY_OUTPUT_PATH})
 
-add_definitions(-DGRAPHICSCENE_LIBRARY -D_CRT_SECURE_NO_WARNINGS)
+add_definitions(-DGUI_LIBRARY -D_CRT_SECURE_NO_WARNINGS)
 
 file(GLOB SOURCE
     graphic_cell.cpp
@@ -26,8 +26,7 @@ file(GLOB SOURCE
     ${GLOBAL_INCLUDE_PATH}/gui/factory.h
     ${GLOBAL_INCLUDE_PATH}/gui/miner.h
     ${GLOBAL_INCLUDE_PATH}/gui/logger.h
-    ${GLOBAL_INCLUDE_PATH}/global/gui_global.h
-    ${GLOBAL_INCLUDE_PATH}/draw/ipainter.h
+    #${GLOBAL_INCLUDE_PATH}/global/gui_global.h
     )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

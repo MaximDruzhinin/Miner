@@ -2,14 +2,14 @@
 #define GRAPHICCELL_H
 
 #include "core/cell.h"
-#include "draw/ipainter.h"
+#include "interfaces/ipainter.h"
 #include <QGraphicsItem>
 #include <memory>
 #include "global/gui_global.h"
 
 namespace gui {
 
-class  GRAPHICSCENE_EXPORT GraphicCell: public core::Cell, public QGraphicsItem {
+class  GUI_EXPORT GraphicCell: public core::Cell, public QGraphicsItem {
 public:
     GraphicCell(int row, int col, QObject* painter, uint width = 20, uint height = 20);
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;

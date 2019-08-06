@@ -17,7 +17,6 @@ file(GLOB SOURCE
     ${GLOBAL_INCLUDE_PATH}/core/cell.h
     ${GLOBAL_INCLUDE_PATH}/core/minefield.h
     ${GLOBAL_INCLUDE_PATH}/core/game.h
-    ${GLOBAL_INCLUDE_PATH}/core/factory_core.h
     )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

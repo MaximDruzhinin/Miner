@@ -12,7 +12,7 @@
 
 namespace gui {
 
-class GRAPHICSCENE_EXPORT MineScene:  public QGraphicsScene, public core::MineField {
+class GUI_EXPORT MineScene:  public QGraphicsScene, public core::MineField {
 public:
     MineScene(uint rowCount = 9, uint colCount = 9, uint mineCount = 10, QObject* parent = nullptr);
     bool addCell(core::ICell* cell) override;

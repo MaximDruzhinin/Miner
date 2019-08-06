@@ -6,8 +6,7 @@
 #include "global/gui_global.h"
 #include "gui/factory.h"
 
-
-class GRAPHICSCENE_EXPORT Miner : public core::Game {
+class GUI_EXPORT Miner : public core::Game {
     Q_OBJECT
 public:
     Miner(QGraphicsView* view, QObject* parent = nullptr);
@@ -24,6 +23,5 @@ private slots:
     void onTimeout();
 
 };
-
 
 #endif // MINER_H
