@@ -18,8 +18,8 @@ add_definitions(-DGRAPHICSCENE_LIBRARY -D_CRT_SECURE_NO_WARNINGS)
 
 add_definitions(-DDRAW_LIBRARY -D_CRT_SECURE_NO_WARNINGS)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Core)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/GraphicScene)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/DrawPlugin)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/App)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/core)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/gui)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/draw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/app)
 

@@ -8,7 +8,7 @@
 #include <set>
 #include <memory>
 #include <QVector>
-#include "Global/core_global.h"
+#include "global/core_global.h"
 
 class ICellPainter;
 

@@ -3,7 +3,7 @@
 
 #include <qobject.h>
 #include "icell.h"
-#include "Global/core_global.h"
+#include "global/core_global.h"
 
 namespace core {
 

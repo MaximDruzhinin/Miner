@@ -1,6 +1,6 @@
 #include <queue>
-#include "Core/minefield.h"
-#include "Core/cell.h"
+#include "core/minefield.h"
+#include "core/cell.h"
 
 core::MineField::MineField(uint rowCount, uint colCount, uint mineCount, QObject* parent):
     QObject(parent),

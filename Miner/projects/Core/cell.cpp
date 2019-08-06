@@ -1,4 +1,4 @@
-#include "Core/cell.h"
+#include "core/cell.h"
 #include <QPainter>
 #include <qdebug.h>
 

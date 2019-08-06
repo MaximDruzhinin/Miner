@@ -1,14 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "GraphicScene/graphiccell.h"
-#include "Draw/cellpainter.h"
+#include "gui/graphic_cell.h"
+#include "draw/painter.h"
 #include <QTimer>
 #include <QTime>
 #include <QMessageBox>
 #include <QStatusBar>
-#include <GraphicScene/factory.h>
+#include "gui/factory.h"
 #include "logger.h"
-#include <Draw/cellpainter.h>
+#include "draw/painter.h"
 
 
 MainWindow::MainWindow(QWidget* parent) :

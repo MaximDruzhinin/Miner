@@ -4,9 +4,9 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include "GraphicScene/minescene.h"
-#include "Core/minercore.h"
-#include "GraphicScene/miner.h"
+#include "gui/mine_scene.h"
+#include "gui/miner.h"
+#include "core/game.h"
 #include <memory>
 
 class QTimer;
