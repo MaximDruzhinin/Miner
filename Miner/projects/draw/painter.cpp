@@ -7,6 +7,8 @@ draw::CellPainter::CellPainter(QObject* parent): QObject (parent)
 
 void draw::CellPainter::drawCell(QPainter* painter, const QRectF& rect, bool opened) const
 {
+    Q_ASSERT(painter);
+
     painter->save();
 
     int x1 = static_cast<int>(rect.x());
@@ -56,6 +58,8 @@ void draw::CellPainter::drawCell(QPainter* painter, const QRectF& rect, bool ope
 
 void draw::CellPainter::drawColorDigit(QPainter* painter, const QRectF& rect, quint8 digit) const
 {
+    Q_ASSERT(painter);
+
     QColor color;
 
     switch (digit) {
@@ -96,6 +100,8 @@ void draw::CellPainter::drawColorDigit(QPainter* painter, const QRectF& rect, qu
 
 void draw::CellPainter::drawCross(QPainter* painter, const QRectF& rect) const
 {
+    Q_ASSERT(painter);
+
     painter->save();
 
     painter->setPen(Qt::red);
@@ -113,6 +119,8 @@ void draw::CellPainter::drawCross(QPainter* painter, const QRectF& rect) const
 
 void draw::CellPainter::drawFlag(QPainter* painter, const QRectF& rect) const
 {
+    Q_ASSERT(painter);
+
     painter->save();
 
     const int dist = 4;
@@ -151,6 +159,8 @@ void draw::CellPainter::drawFlag(QPainter* painter, const QRectF& rect) const
 
 void draw::CellPainter::drawMine(QPainter* painter, const QRectF& rect, QColor backgroundColor) const
 {
+    Q_ASSERT(painter);
+
     painter->save();
     painter->fillRect(static_cast<int>(rect.x()) + 1,
                       static_cast<int>(rect.y()) + 1,

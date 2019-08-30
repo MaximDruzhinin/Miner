@@ -32,8 +32,7 @@ bool core::MineField::addFlagInCell(int row, int col)
         return false;
 
     auto cell = at(row, col);
-    if (!cell)
-        return false;
+    Q_ASSERT(cell);
 
     if (m_flagCells.size() >= m_mineCount)
         return false;
@@ -54,8 +53,7 @@ bool core::MineField::addFlagInCell(int row, int col)
 bool core::MineField::removeFlagFromCell(int row, int col)
 {
     ICell* cell = at(row, col);
-    if (!cell)
-        return false;
+    Q_ASSERT(cell);
 
     if (cell->removeFlag()) {
         auto pos = std::find(m_flagCells.begin(), m_flagCells.end(), cell);
@@ -110,6 +108,8 @@ void core::MineField::init(ICell* cell)
         return;
     }
 
+    Q_ASSERT(m_mineCount < m_colCount * m_rowCount-1);
+
     cell->open(true);
 
     qsrand(static_cast<uint>(QTime(0,0,0).secsTo(QTime::currentTime())));
@@ -127,10 +127,9 @@ void core::MineField::init(ICell* cell)
         if (!cell->opened()) {
             std::swap(numbers[i], numbers[r]);
             i++;
-            auto object = dynamic_cast<core::Cell*>(cell);
-            if (object)
-                QObject::connect(object, SIGNAL(detonation()), this, SLOT(on_detonation_cell()));
-
+            core::Cell* qcell = dynamic_cast<core::Cell*>(cell);
+            Q_ASSERT(qcell);
+            QObject::connect(qcell, SIGNAL(detonation()), this, SLOT(on_detonation_cell()));
             cell->setMine();
             m_mineCells.insert(cell);
             changeDigitInNeibCells(cell);

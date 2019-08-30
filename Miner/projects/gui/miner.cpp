@@ -16,22 +16,14 @@ Miner::Miner(QGraphicsView *view, QObject *parent): m_view(view)
 
 bool Miner::runGame(GameType type)
 {
-    if (!m_view) {
-        LOG_ERROR("Graphics View is NULL");
-        return false;
-    }
+    Q_ASSERT(m_view);
 
     m_minefield = run(type);
-    if (!m_minefield) {
-        LOG_ERROR("Failed init minefield")
-        return false;
-    }
+    Q_ASSERT(m_minefield);
 
     std::shared_ptr<gui::MineScene> scene = std::dynamic_pointer_cast<gui::MineScene>(m_minefield);
-    if (!scene) {
-        LOG_ERROR("Invalid cast to gui::MineScene")
-        return false;
-    }
+    Q_ASSERT(scene);
+
     scene->setView(m_view);
 
     return true;

@@ -26,6 +26,7 @@ add_executable(miner
     ${GLOBAL_INCLUDE_PATH}/gui/graphic_cell.h
     ${GLOBAL_INCLUDE_PATH}/gui/mine_scene.h
     ${GLOBAL_INCLUDE_PATH}/gui/miner.h
+    ${GLOBAL_INCLUDE_PATH}/info_defines.h
 )
 
 target_link_libraries(miner Qt5::Widgets core gui draw)

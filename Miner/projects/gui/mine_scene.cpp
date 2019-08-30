@@ -20,10 +20,7 @@ bool gui::MineScene::addCell(core::ICell* cell)
         return false;
 
     QGraphicsItem* item = dynamic_cast<QGraphicsItem*>(cell);
-    if (!item) {
-        LOG_ERROR("Invalid cast to QGraphicsItem");
-        return false;
-    }
+    Q_ASSERT(item);
 
     addItem(item);
 
@@ -38,11 +35,10 @@ void gui::MineScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 
     QGraphicsItem* item = itemAt(event->scenePos(), QTransform());
+    Q_ASSERT(item);
+
     gui::GraphicCell* cell = dynamic_cast<gui::GraphicCell*>(item);
-    if (!cell) {
-        LOG_ERROR("Invalid cast to gui::GraphicCell");
-        return;
-    }
+    Q_ASSERT(cell);
 
     if (event->button() == Qt::LeftButton) {
         if (m_firstClick) {
@@ -66,18 +62,12 @@ void gui::MineScene::setView(QGraphicsView* view)
 {
     m_graphicsView = view;
 
-    if (!m_graphicsView) {
-        LOG_ERROR("m_graphicsView is nullptr")
-        return;
-    }
+    Q_ASSERT(m_graphicsView);
 
     m_graphicsView->setScene(this);
 
     GraphicCell* cell = dynamic_cast<GraphicCell*>(at(0,0));
-    if (!cell) {
-        LOG_ERROR("Invalid cast to gui::GraphicCell");
-        return;
-    }
+    Q_ASSERT(cell);
 
     m_graphicsView->setGeometry(0, 0, static_cast<int>(cell->width() * colCount()) + 1, static_cast<int>(cell->height() * rowCount()) + 1);
 }

@@ -14,10 +14,9 @@ void gui::GraphicCell::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 {
     if (m_painter) {
         draw::ICellPainter* myPainter = dynamic_cast<draw::ICellPainter*>(m_painter);
-        if (!myPainter) {
-            qDebug () << "Can't cast to draw::IPainter";
-            return;
-        }
+
+        Q_ASSERT(myPainter);
+
         myPainter->drawCell(painter, boundingRect(), opened());
         if (opened()) {
             if (mined()) {

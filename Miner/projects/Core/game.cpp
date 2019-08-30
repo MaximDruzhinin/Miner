@@ -30,17 +30,11 @@ std::shared_ptr<core::MineField> core::Game::run(GameType type)
         break;
     }
 
-    if (!m_factory) {
-        LOG_ERROR("Factory not init")
-        return nullptr;
-    }
+    Q_ASSERT(m_factory);
 
     m_minefield = m_factory->createMineField(rowCount, colCount, mineCount);
 
-    if (!m_minefield) {
-        LOG_ERROR("Failed to create minefield")
-        return nullptr;
-    }
+    Q_ASSERT(m_minefield);
 
     for (int i = 0; i < rowCount; i++) {
         for (int j = 0; j < colCount; j++) {
@@ -106,8 +100,7 @@ void core::Game::on_minefield_initalized()
 
 void core::Game::on_minefield_flagSetted()
 {
-    if (!m_minefield)
-        return;
+    Q_ASSERT(m_minefield);
 
     emit on_flagSetted();
 
@@ -126,8 +119,7 @@ void core::Game::on_minefield_flagRemoved()
 
 void core::Game::on_minefield_detonationCell()
 {
-    if (!m_minefield)
-        return;
+    Q_ASSERT(m_minefield);
 
     m_detonated = true;
 

@@ -15,6 +15,7 @@ enum class GameStatus {
  };
 
 struct Presets {
+    Presets () = delete;
     static const int BEGINNER_COL_COUNT = 9;
     static const int BEGINNER_ROW_COUNT = 9;
     static const int BEGINNER_MINE_COUNT = 10;
