@@ -38,7 +38,7 @@ bool core::MineField::addFlagInCell(int row, int col)
         return false;
 
     if (cell->setFlag()) {
-        m_flagCells.insert(cell);
+        m_flagCells.push_back(cell);
         if (cell->mined()) {
             m_revealedMineCount++;
         }
@@ -108,7 +108,7 @@ void core::MineField::init(ICell* cell)
         return;
     }
 
-    Q_ASSERT(m_mineCount < m_colCount * m_rowCount-1);
+    Q_ASSERT(m_mineCount < m_colCount * m_rowCount - 1);
 
     cell->open(true);
 
@@ -131,7 +131,7 @@ void core::MineField::init(ICell* cell)
             Q_ASSERT(qcell);
             QObject::connect(qcell, SIGNAL(detonation()), this, SLOT(on_detonation_cell()));
             cell->setMine();
-            m_mineCells.insert(cell);
+            m_mineCells.push_back(cell);
             changeDigitInNeibCells(cell);
         }
     }
@@ -233,20 +233,20 @@ void core::MineField::changeDigitInNeibCells(ICell* cell)
    const auto& neibs = neibCells(cell->row(), cell->col());
 
    for (auto cell : neibs) {
-       auto digit = cell->digit();
+       int digit = cell->digit();
        cell->setDigit(++digit);
    }
 }
 
-std::set<core::ICell*> core::MineField::neibCells(uint row, uint col) const
+std::vector<core::ICell*> core::MineField::neibCells(uint row, uint col) const
 {
-    std::set<ICell*> neibs;
+    std::vector<ICell*> neibs;
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++ ) {
             if (i || j) {
-                auto neib = at(static_cast<int>(row) + i, static_cast<int>(col) + j);
+                core::ICell* neib = at(static_cast<int>(row) + i, static_cast<int>(col) + j);
                 if (neib)
-                    neibs.insert(neib);
+                    neibs.push_back(neib);
             }
         }
     }

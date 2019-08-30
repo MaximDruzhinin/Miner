@@ -44,15 +44,15 @@ public slots:
     void on_detonation_cell();
 private:
     void changeDigitInNeibCells(ICell* cell);
-    std::set<ICell*> neibCells(uint row, uint col) const;
+    std::vector<ICell*> neibCells(uint row, uint col) const;
     uint m_rowCount = 0;
     uint m_colCount = 0;
     uint m_mineCount = 0;
     bool m_isInit = false;
     bool m_enabled = true;
     std::vector<std::vector<ICell*>> m_cells;
-    std::set<ICell*> m_mineCells;
-    std::set<ICell*> m_flagCells;
+    std::vector<ICell*> m_mineCells;
+    std::vector<ICell*> m_flagCells;
     uint m_revealedMineCount = 0;
 };
 
