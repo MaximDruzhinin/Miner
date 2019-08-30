@@ -1,6 +1,7 @@
 #include <queue>
 #include "core/minefield.h"
 #include "core/cell.h"
+#include <unordered_set>
 
 core::MineField::MineField(uint rowCount, uint colCount, uint mineCount, QObject* parent):
     QObject(parent),
@@ -119,13 +120,13 @@ void core::MineField::init(ICell* cell)
         numbers[i] = static_cast<uint>(i);
 
     for (uint i = 0; i < m_mineCount;) {
-        uint r = rand() % (numbers.size() - 1 - i) + i;
-        uint col = numbers[r] / m_rowCount;
+        uint r = rand() % (numbers.size() - 1 - i) + i; // выбираем случайное число в диапазоне [i, col*row]
+        uint col = numbers[r] / m_rowCount; // вычисляем строку и столбец
         uint row = numbers[r] % m_rowCount;
 
-        auto cell = m_cells[row][col];
-        if (!cell->opened()) {
-            std::swap(numbers[i], numbers[r]);
+        ICell* cell = m_cells[row][col];
+        if (!cell->opened()) { //на первом ходе нельзя попасть на мину(в открытую клетку нельзя поставить мину)
+            std::swap(numbers[i], numbers[r]); // удаляем из диапазона, чтобы не было повторной генерации числа
             i++;
             core::Cell* qcell = dynamic_cast<core::Cell*>(cell);
             Q_ASSERT(qcell);
@@ -160,12 +161,15 @@ void core::MineField::openCell(ICell* cell)
     if (!isInit())
         return;
 
-    std::queue<ICell*> q;
+    std::queue<ICell*> q; //очередь пустных клеток, формирующаяся при открытии клетки cell
+
+    std::unordered_set<ICell*> visited; // чтобы исключить переполнение очереди при обходе клеток, те клетки которые "посетили" добавиляем в visited
+
     if (!cell->opened()) {
         if (!cell->empty())
             cell->open(true);
         else {
-            cell->setReadyOpen(true);
+            visited.insert(cell);
             q.push(cell);
         }
     }
@@ -179,8 +183,8 @@ void core::MineField::openCell(ICell* cell)
             const auto& neibs = neibCells(cell->row(), cell->col());
             if (!neibs.empty()) {
                 for (auto cell: neibs) {
-                    if (!cell->readyOpened() && cell->empty()) {
-                        cell->setReadyOpen(true);
+                    if (!visited.count(cell) && cell->empty()) {
+                        visited.insert(cell);
                         q.push(cell);
                     }
                     if (!cell->empty() && !cell->flagged())

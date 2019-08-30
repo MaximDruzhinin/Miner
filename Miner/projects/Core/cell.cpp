@@ -65,16 +65,6 @@ bool core::Cell::opened() const
     return m_opened;
 }
 
-void core::Cell::setReadyOpen(bool _readyOpened)
-{
-    m_readyOpened = _readyOpened;
-}
-
-bool core::Cell::readyOpened() const
-{
-    return m_readyOpened;
-}
-
 uint core::Cell::col() const
 {
     return m_col;

@@ -19,8 +19,6 @@ public:
     int digit() const override;
     bool flagged() const override;
     bool opened() const override;
-    void setReadyOpen(bool ready_opened) override;
-    bool readyOpened() const override;
     uint col() const override;
     uint row() const override;
     void setMine() override;

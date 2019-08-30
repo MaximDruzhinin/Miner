@@ -12,12 +12,10 @@ public:
     virtual bool empty() const = 0;
     virtual bool setFlag() = 0;
     virtual bool removeFlag() = 0;
-    virtual void setDigit(int _digit) = 0;
+    virtual void setDigit(int digit) = 0;
     virtual int digit() const = 0;
     virtual bool flagged() const = 0;
     virtual bool opened() const = 0;
-    virtual void setReadyOpen(bool _readyOpened) = 0;
-    virtual bool readyOpened() const = 0;
     virtual uint col() const = 0;
     virtual uint row() const = 0;
     virtual void setMine() = 0;
